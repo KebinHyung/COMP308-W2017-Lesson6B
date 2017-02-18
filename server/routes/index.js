@@ -42,4 +42,48 @@ router.get('/contact', (req, res, next) => {
    });
 });
 
+//GET /login - renders login view
+router.get("/login" , (req,res, next) => {
+  //check to see if user is not already logged in
+  if(!req.user) {
+    //render/draw login page
+    res.render('auth/login', {
+      title: "Login",
+      games: '',
+      messages: req.flash('loginMessage'),
+      displayName: req.user ? req.user.displayName: ''
+    });
+    //TODO
+    return;
+  } else{
+    return res.redirect('/games'); // redirects to games list
+    }
+});
+
+//POST /login - process the login view
+router.post("/login" , (req,res, next) => {
+
+});
+
+//GET /register  - renders the register view
+router.get("/register" , (req,res, next) => {
+if(!req.user) {
+    
+    //TODO
+    
+  } else{
+    return res.redirect('/games'); // redirects to games list
+    }
+});
+
+//POST /register - process the login view
+router.post("/register" , (req,res, next) => {
+
+});
+
+//GET /logout - process the logout view
+router.get("/logout" , (req,res, next) => {
+
+});
+
 module.exports = router;
