@@ -9,12 +9,12 @@ let UserSchema = new Schema({
     trim: true,
     required: 'username is required'
   },
-  password: {
+ /* password: {
     type: String,
     default: '',
     trim: true,
     required: 'password is required'
-  },
+  },*/
   email: {
     type: String,
     default: '',

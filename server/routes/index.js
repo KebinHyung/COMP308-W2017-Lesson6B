@@ -71,9 +71,15 @@ router.post("/login" , passport.authenticate('local', {
 //GET /register  - renders the register view
 router.get("/register" , (req,res, next) => {
 if(!req.user) {
-    
+    //render the register page
+    res.render('auth/register', {
+      title: "Register",
+      games: '',
+      messages: req.flash('registerMessage'),
+      displayName: req.user ? req.user.displayName: ''
+    });
     //TODO
-    
+    return;
   } else{
     return res.redirect('/games'); // redirects to games list
     }
@@ -81,7 +87,32 @@ if(!req.user) {
 
 //POST /register - process the login view
 router.post("/register" , (req,res, next) => {
-
+  User.register(
+    new User({
+        username: req.body.username,
+        //password: req.body.password,
+        email: req.body.email,
+        displayName: req.body.displayName
+      }),
+      req.body.password,
+      (err) => {
+        if(err){
+          console.log('Error inserting new user');
+          if(err.name == "UserExistsError") {
+            req.flash('registerMessage', "Registration Error: User Already Exists");
+          }
+          return res.render('auth/register', {
+          title: "Register",
+          games: '',
+          messages: req.flash('registerMessage'),
+          displayName: req.user ? req.user.displayName: ''
+          });
+        }
+          //if Registration is successful
+          return passport.authenticate('local')(req,res,() => {
+            res.redirect('/games');
+          });
+      });
 });
 
 //GET /logout - process the logout view
