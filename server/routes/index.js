@@ -61,9 +61,12 @@ router.get("/login" , (req,res, next) => {
 });
 
 //POST /login - process the login view
-router.post("/login" , (req,res, next) => {
+router.post("/login" , passport.authenticate('local', {
+  successRedirect: '/games',
+  failureRedirect: '/login',
+  failureFlash: "Incorrect Username/Password"
 
-});
+}));
 
 //GET /register  - renders the register view
 router.get("/register" , (req,res, next) => {
@@ -83,7 +86,8 @@ router.post("/register" , (req,res, next) => {
 
 //GET /logout - process the logout view
 router.get("/logout" , (req,res, next) => {
-
+  req.logOut();
+  res.redirect('/'); //redirect to home page
 });
 
 module.exports = router;
