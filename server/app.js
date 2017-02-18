@@ -63,12 +63,12 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', index);
 app.use('/games', games);
 
-//Passport User Configuration
-let usermodel = require('./models/users');
-let user = usermodel.users; //Alias for User Model - User Object
-passport.use(user.createStrategy());
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
+// Passport User Configuration
+let UserModel = require('./models/users');
+let User = UserModel.User; // alias for the User Model - User object
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 // Handle 404 Errors
